@@ -5,14 +5,14 @@
 <meta name="description" content="Operational claims orchestration view showing parallel intelligence services, persistent Claim State, action readiness and human decision gates.">
 <meta name="author" content="Dharshun Sridharan"><meta name="theme-color" content="#102b3b">
 <link rel="stylesheet" href="../assets/css/site.css">
-</head><body data-page="prototype/orchestration.html">
+</head><body class="ops-body" data-page="prototype/orchestration.html">
 <header class="topbar"><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">☰</button><a class="top-brand" href="../index.html"><span class="brand-mark">COR<span>A</span></span><span><strong>Claims Orchestration</strong><small>Reference Architecture</small></span></a><div class="top-meta"><span>Operations view</span><span>Parallel execution</span></div></header>
 <div class="site-shell prototype-shell">
 <main class="content"><article class="article prototype-article orchestration-article">
 <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="index.html">Live prototype</a><span>/</span><strong>Orchestration view</strong></nav>
 <nav class="prototype-view-switch" aria-label="Prototype views"><a href="index.html">Consultant view</a><a class="active" href="orchestration.html" aria-current="page">Orchestration view</a></nav>
 
-<header class="page-hero orchestration-hero"><p class="kicker">Operational orchestration console</p><h1>Watch the claim stay still while work moves</h1><p class="lead">The orchestrator dispatches independent intelligence services around one Claim State. Work progresses in parallel, while consequential decisions remain visibly assigned to a human.</p></header>
+<header class="page-hero orchestration-hero"><div><p class="kicker">Operational orchestration console</p><h1>One claim. Many signals. One controlled outcome.</h1></div><p class="lead">Watch independent intelligence services publish into a persistent Claim State while the orchestrator releases safe actions and routes consequential authority to a human.</p></header>
 
 <section class="orchestration-controls" aria-label="Orchestration controls">
   <div><span class="ops-eyebrow">Synthetic claim</span><strong>CLM-2026-00127 · Simple motor collision</strong><small>Rear-end collision · Driveable vehicle · Mobility need</small></div>
@@ -29,23 +29,33 @@
 
 <section class="orchestration-layout">
   <div class="ops-main">
-    <section class="orchestrator-panel">
-      <div class="orchestrator-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div><p class="panel-kicker">Control plane</p><h2>Claims orchestrator</h2><p id="ops-directive">Start the claim to dispatch parallel work.</p></div>
-      <span class="orchestrator-state" id="ops-state">IDLE</span>
-    </section>
+    <section class="topology-panel" aria-labelledby="agent-heading">
+      <div class="topology-heading"><div><p class="panel-kicker">Live system map</p><h2 id="agent-heading">Parallel claim intelligence</h2></div><div class="topology-heading-meta"><span class="live-dot"></span><b id="topology-mode">Ready</b><small>No global stage gate</small></div></div>
+      <div class="topology-canvas" id="topology-canvas">
+        <div class="topology-grid" aria-hidden="true"></div>
+        <svg class="topology-lines" viewBox="0 0 900 570" preserveAspectRatio="none" aria-hidden="true">
+          <path class="control-line" d="M450 92 L450 245"/>
+          <path d="M450 302 L155 137"/><path d="M450 302 L745 137"/>
+          <path d="M450 302 L125 290"/><path d="M450 302 L775 290"/>
+          <path d="M450 302 L175 455"/><path d="M450 302 L450 488"/><path d="M450 302 L725 455"/>
+        </svg>
 
-    <div class="dispatch-fabric" aria-hidden="true"><span></span><b>Dispatch · observe · reconcile · release</b><span></span></div>
+        <section class="orchestrator-node">
+          <div class="orchestrator-mark" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div><span>Control plane</span><h2>Claims orchestrator</h2><p id="ops-directive">Start the claim to dispatch parallel work.</p></div>
+          <b class="orchestrator-state" id="ops-state">IDLE</b>
+        </section>
 
-    <section class="agent-section" aria-labelledby="agent-heading">
-      <div class="ops-section-heading"><div><p class="panel-kicker">Parallel intelligence</p><h2 id="agent-heading">Independent services</h2></div><span>No global stage gate</span></div>
-      <div class="agent-grid" id="agent-grid"></div>
-    </section>
+        <div class="agent-grid" id="agent-grid"></div>
 
-    <section class="claim-hub" aria-labelledby="claim-hub-heading">
-      <div class="claim-hub-core"><span>Persistent state</span><h2 id="claim-hub-heading">Claim State</h2><strong id="hub-version">v0</strong></div>
-      <div class="claim-hub-copy"><p id="hub-summary">No evidence has been published.</p><small>Every finding is versioned, attributable and available to action readiness.</small></div>
-      <div class="claim-hub-pulse" id="hub-pulse">Waiting for input</div>
+        <section class="claim-hub" aria-labelledby="claim-hub-heading">
+          <div class="claim-orbit orbit-one"></div><div class="claim-orbit orbit-two"></div>
+          <div class="claim-hub-core"><span>Persistent state</span><h2 id="claim-hub-heading">Claim State</h2><strong id="hub-version">v0</strong></div>
+          <p id="hub-summary">No evidence has been published.</p>
+          <div class="claim-hub-pulse" id="hub-pulse">Waiting for input</div>
+        </section>
+      </div>
+      <div class="topology-footer"><span><i class="waiting"></i>Waiting</span><span><i class="running"></i>Processing</span><span><i class="complete"></i>Published</span><p>Evidence is versioned, attributable and continuously reconciled.</p></div>
     </section>
   </div>
 
@@ -66,8 +76,6 @@
     <section class="ops-card event-ledger"><div class="ops-section-heading"><div><p class="panel-kicker">Trace</p><h2>Orchestration log</h2></div><span id="event-count">0 events</span></div><ol id="ops-events"><li class="empty">No activity yet.</li></ol></section>
   </aside>
 </section>
-
-<section class="ops-legend" aria-label="Agent status legend"><span><i class="waiting"></i>Waiting</span><span><i class="running"></i>Running in parallel</span><span><i class="complete"></i>Finding published</span><span><i class="human"></i>Human authority</span></section>
 
 <section class="section prototype-method"><h2>How the two views fit together</h2><div class="table-wrap"><table><thead><tr><th>Consultant view</th><th>Orchestration view</th></tr></thead><tbody><tr><td>Shows the claim context, customer activity and one explainable next-best-action recommendation.</td><td>Shows which services produced the evidence, what is running concurrently and why work was released or held.</td></tr><tr><td>Optimised for clarity, customer experience and light-touch human review.</td><td>Optimised for operations, architecture, assurance and runtime oversight.</td></tr></tbody></table></div></section>
 

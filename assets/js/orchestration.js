@@ -29,9 +29,9 @@
 
   const icon = status => ({waiting:'○',running:'↻',complete:'✓',human:'!'})[status] || '○';
   function renderAgents(){
-    $('#agent-grid').innerHTML = SERVICES.map(service => {
+    $('#agent-grid').innerHTML = SERVICES.map((service,serviceIndex) => {
       const state=serviceState[service.id];
-      return `<article class="agent-card ${state.status}"><div class="agent-card-top"><span class="agent-icon">${icon(state.status)}</span><span>${state.status==='running'?'ACTIVE':state.status==='complete'?'PUBLISHED':'QUEUED'}</span></div><h3>${service.name}</h3><p>${service.owner}</p><div class="agent-progress"><i></i></div><small>${state.detail}</small></article>`;
+      return `<article class="agent-card service-${service.id} ${state.status}"><div class="agent-card-top"><span class="agent-index">0${serviceIndex+1}</span><span class="agent-status"><i>${icon(state.status)}</i>${state.status==='running'?'PROCESSING':state.status==='complete'?'PUBLISHED':'QUEUED'}</span></div><h3>${service.name}</h3><p>${service.owner}</p><div class="agent-progress"><i></i></div><small>${state.detail}</small></article>`;
     }).join('');
   }
 
@@ -45,6 +45,8 @@
     $('#ops-mode').textContent=index<0?'Waiting':stage?.human&&!humanApproved?'Awaiting human':index===STAGES.length-1?'Complete':'Orchestrating';
     $('#ops-state').textContent=index<0?'IDLE':stage?.human&&!humanApproved?'HUMAN GATE':index===STAGES.length-1?'COMPLETE':'ACTIVE';
     $('#ops-state').className=`orchestrator-state ${stage?.human&&!humanApproved?'human':index===STAGES.length-1?'complete':''}`;
+    $('#topology-mode').textContent=index<0?'Ready':stage?.human&&!humanApproved?'Human review':index===STAGES.length-1?'Complete':`${active} services active`;
+    $('#topology-canvas').className=`topology-canvas ${active?'has-activity':''} ${stage?.human&&!humanApproved?'human-gate':''} ${index===STAGES.length-1?'is-complete':''}`;
     $('#ops-directive').textContent=stage?.directive || 'Start the claim to dispatch parallel work.';
     $('#hub-summary').textContent=stage?.summary || 'No evidence has been published.';
     $('#hub-pulse').textContent=index<0?'Waiting for input':`${active} active · ${complete} published`;
