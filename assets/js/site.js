@@ -16,11 +16,29 @@
  const nodeFunctionMap = arch.nodeFunctions?.[page] || {};
  const nodeOverrides = arch.nodeOverrides?.[page] || {};
 
+ const navGroups = [
+   ['Start here', [['index.html','Overview'],['why-change.html','Why change the process']]],
+   ['Operating model', [['operating-model/index.html','Target operating model'],['operating-model/principles.html','Design principles'],['operating-model/capabilities.html','Capability model']]],
+   ['Process architecture', [['process/index.html','Process hierarchy'],['process/master.html','L1 master process'],['process/intake.html','1. Establishment & intake'],['process/intelligence.html','2. Parallel intelligence'],['process/decision-readiness.html','3. Decision readiness'],['process/communications-controls.html','5/6. Communications & controls'],['process/fulfilment-closure.html','4/7. Fulfilment & closure'],['process/function-catalogue.html','Function catalogue']]],
+   ['Reference architecture', [['reference/index.html','Component architecture'],['reference/claim-state.html','Claim State'],['reference/decision-architecture.html','Decision architecture'],['reference/human-decisioning.html','Human decisioning'],['reference/agents-services.html','Agents & services'],['reference/non-functional.html','Non-functional requirements']]],
+   ['Governance', [['governance/control-framework.html','Control model'],['governance/compliance-map.html','Obligation map'],['governance/traceability.html','Traceability'],['governance/methodology.html','Methodology & scope'],['governance/sources.html','Authoritative sources']]],
+   ['Implementation', [['implementation/index.html','Delivery approach'],['implementation/feasibility.html','Practical feasibility'],['implementation/assurance.html','Assurance & testing']]]
+ ];
+ const pageShell = document.querySelector('.site-shell:not(.prototype-shell)');
+ if(pageShell && !pageShell.querySelector('.sidebar')){
+   const sidebar = document.createElement('aside');
+   sidebar.className = 'sidebar';
+   sidebar.setAttribute('aria-label','Publication navigation');
+   sidebar.innerHTML = `<div class="sidebar-inner"><div class="nav-intro"><strong>Architecture guide</strong><span>Explore the operating model, process and controls.</span></div>${navGroups.map(([group,items])=>`<nav class="nav-group" aria-label="${group}"><div class="nav-group-title">${group}</div>${items.map(([path,title])=>`<a class="nav-link${page===path?' active':''}" href="${prefix+path}"${page===path?' aria-current="page"':''}>${title}</a>`).join('')}</nav>`).join('')}<p class="sidebar-note">Reference architecture · Web Edition 3.2</p></div>`;
+   pageShell.prepend(sidebar);
+ }
+
  const toggle = document.querySelector('.nav-toggle');
  const nav = document.querySelector('.sidebar');
  const scrim = document.querySelector('.nav-scrim');
  const closeNav = () => { nav?.classList.remove('open'); scrim?.classList.remove('open'); toggle?.setAttribute('aria-expanded','false'); };
- toggle?.addEventListener('click', () => { const open = !nav.classList.contains('open'); nav.classList.toggle('open',open); scrim?.classList.toggle('open',open); toggle.setAttribute('aria-expanded', String(open)); });
+ if(!nav) toggle?.setAttribute('hidden','');
+ toggle?.addEventListener('click', () => { if(!nav)return; const open = !nav.classList.contains('open'); nav.classList.toggle('open',open); scrim?.classList.toggle('open',open); toggle.setAttribute('aria-expanded', String(open)); });
  scrim?.addEventListener('click', closeNav);
  document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', closeNav));
 

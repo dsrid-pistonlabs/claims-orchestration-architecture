@@ -142,7 +142,11 @@
     $('#claim-state-summary').innerHTML=`<div class="claim-overview"><div><span>Customer</span><strong>${esc(scenario.customer)}</strong></div><div><span>Product</span><strong>${esc(scenario.product)}</strong></div><div><span>Event</span><strong>${esc(scenario.event)}</strong></div></div><p class="state-narrative">${esc(state.summary)}</p>`;
     $('#state-domains').innerHTML=Object.entries(state.domains).map(([k,d])=>`<article class="state-domain"><span>${esc(d.label)}</span><strong class="domain-${statusClass(d.status)}">${esc(domainStatusLabel(d))}</strong><p>${esc(d.summary)}</p><small>${esc(d.unknown)}</small></article>`).join('');
     $('#intel-grid').innerHTML=Object.entries(state.domains).map(([k,d])=>`<article class="intel-card ${statusClass(d.status)}"><div class="intel-top"><h3>${esc(d.label)}</h3><span>${esc(d.status)}</span></div>${d.confidence!=null?`<div class="confidence"><i style="width:${d.confidence}%"></i></div><div class="confidence-label">Evidence confidence <strong>${d.confidence}%</strong></div>`:''}<p>${esc(d.summary)}</p><small><strong>Material unknown:</strong> ${esc(d.unknown)}</small></article>`).join('');
-    $('#action-board').innerHTML=`<div class="action-header"><span>Candidate action</span><span>Readiness</span><span>Why</span></div>`+state.actions.map(a=>`<div class="action-row ${statusClass(a.status)}"><div class="action-name"><i>${actionIcon(a.status)}</i><strong>${esc(a.label)}</strong></div><span class="action-status">${esc(a.status)}</span><p>${esc(a.reason)}</p></div>`).join('');
+    const actionRows=`<div class="action-header"><span>Candidate action</span><span>Readiness</span><span>Why</span></div>`+state.actions.map(a=>`<div class="action-row ${statusClass(a.status)}"><div class="action-name"><i>${actionIcon(a.status)}</i><strong>${esc(a.label)}</strong></div><span class="action-status">${esc(a.status)}</span><p>${esc(a.reason)}</p></div>`).join('');
+    const priority={HUMAN:0,READY:1,CONDITIONAL:2,BLOCKED:3,WAITING:4,EXECUTED:5};
+    const recommended=[...state.actions].sort((a,b)=>(priority[a.status]??9)-(priority[b.status]??9))[0];
+    $('#action-board').innerHTML=recommended?`<article class="next-action-card ${statusClass(recommended.status)}"><div class="next-action-top"><span>${actionIcon(recommended.status)} ${esc(recommended.status)}</span><small>Based on current evidence</small></div><h3>${esc(recommended.label)}</h3><p>${esc(recommended.reason)}</p><div class="next-action-foot"><span>Human remains accountable</span><span>Claim State v${state.version}</span></div></article>`:'<div class="next-action-empty">No action is available yet.</div>';
+    $('#all-actions-board').innerHTML=actionRows;
     $('#event-stream').innerHTML=state.events.length?state.events.map(e=>`<li class="event-${statusClass(e.kind)}"><time>${esc(e.time)}</time><div><strong>${esc(e.title)}</strong><p>${esc(e.summary)}</p><small>Claim State v${e.version}</small></div></li>`).join(''):'<li class="empty">No events yet.</li>';
     $('#customer-stream').innerHTML=state.customerEvents.length?state.customerEvents.map(e=>`<li><time>${esc(e.time)}</time><p>${esc(e.text)}</p></li>`).join(''):'<li class="empty">No customer communications yet.</li>';
     $('#control-console').innerHTML=state.controls.map(c=>`<article class="prototype-control ${statusClass(c.state)}"><div><span>${esc(c.id)}</span><strong>${esc(c.state)}</strong></div><h3>${esc(c.name)}</h3><p>${esc(c.note||c.basis)}</p></article>`).join('');
@@ -154,21 +158,27 @@
 
   function renderIdle(){
     $('#claim-id').textContent='Not started'; $('#sim-time').textContent='00:00'; $('#state-version').textContent='v0'; $('#next-decision').textContent='Start a scenario'; $('#progress-bar').style.width='0%';
+    $('#state-badge').textContent='WAITING'; $('#state-badge').className='state-badge';
+    $('#action-board').innerHTML='<div class="next-action-empty"><span>Ready when you are</span><strong>Start a scenario to see the recommended action.</strong><p>Evidence, controls and action readiness will update as the claim develops.</p></div>';
+    $('#all-actions-board').innerHTML='';
+    $('#claim-state-summary').innerHTML='<p>Choose a scenario and start the claim.</p>'; $('#intel-grid').innerHTML=''; $('#state-domains').innerHTML='';
+    $('#event-stream').innerHTML='<li class="empty">No events yet.</li>'; $('#customer-stream').innerHTML='<li class="empty">No customer communications yet.</li>'; $('#control-console').innerHTML='';
   }
 
   function start(){
-    stopAuto(); const key=$('#scenario-select').value; scenario=scenarios[key]; state=initialState(scenario); stepIndex=-1; pendingDecision=null; $('#start-sim').textContent='Restart claim'; $('#next-event').disabled=false; $('#auto-run').disabled=false; $('#reset-sim').disabled=false; render(); next();
+    stopAuto(); closeDisclosures(); const key=$('#scenario-select').value; scenario=scenarios[key]; state=initialState(scenario); stepIndex=-1; pendingDecision=null; $('#start-sim').textContent='Restart scenario'; $('#next-event').disabled=false; $('#auto-run').disabled=false; $('#reset-sim').disabled=false; render(); next();
   }
   function next(){
     if(!state || pendingDecision || stepIndex>=scenario.steps.length-1) return;
     stepIndex++; const step=scenario.steps[stepIndex]; applyStep(step); render();
   }
-  function reset(){ stopAuto(); state=null; scenario=null; stepIndex=-1; pendingDecision=null; $('#start-sim').textContent='Start claim'; $('#next-event').disabled=true; $('#auto-run').disabled=true; $('#reset-sim').disabled=true; closeDecision(); renderIdle(); document.querySelectorAll('.sim-panel').forEach(x=>x.classList.remove('pulse')); }
+  function reset(){ stopAuto(); state=null; scenario=null; stepIndex=-1; pendingDecision=null; $('#start-sim').textContent='Start scenario'; $('#next-event').disabled=true; $('#auto-run').disabled=true; $('#reset-sim').disabled=true; closeDecision(); closeDisclosures(); renderIdle(); document.querySelectorAll('.sim-panel').forEach(x=>x.classList.remove('pulse')); }
+  function closeDisclosures(){ document.querySelectorAll('.prototype-disclosure[open]').forEach(x=>{x.open=false;}); }
   function auto(){
     if(timer){stopAuto();return;} $('#auto-run').textContent='Pause';
     timer=setInterval(()=>{ if(pendingDecision || !state || state.complete){stopAuto();return;} next(); },1100);
   }
-  function stopAuto(){ if(timer){clearInterval(timer);timer=null;} const b=$('#auto-run'); if(b)b.textContent='Auto run'; }
+  function stopAuto(){ if(timer){clearInterval(timer);timer=null;} const b=$('#auto-run'); if(b)b.textContent='Play'; }
 
   function showDecision(d){
     stopAuto(); const m=$('#decision-modal'); $('#decision-title').textContent=d.title; $('#decision-risk').textContent=d.risk;
@@ -190,7 +200,7 @@
     const sel=$('#scenario-select'); sel.innerHTML=Object.entries(scenarios).map(([k,s])=>`<option value="${k}">${esc(s.name)}</option>`).join('');
     const update=()=>{$('#scenario-summary').textContent=scenarios[sel.value].subtitle;}; sel.addEventListener('change',()=>{update();if(state)reset();}); update();
     $('#start-sim').addEventListener('click',start); $('#next-event').addEventListener('click',next); $('#auto-run').addEventListener('click',auto); $('#reset-sim').addEventListener('click',reset);
-    $('#toggle-compare').addEventListener('click',e=>{const b=$('#comparison-content');b.hidden=!b.hidden;e.currentTarget.textContent=b.hidden?'Show comparison':'Hide comparison';if(!b.hidden)renderComparison();});
+    $('#comparison-disclosure').addEventListener('toggle',e=>{const b=$('#comparison-content');b.hidden=!e.currentTarget.open;if(e.currentTarget.open)renderComparison();});
     renderIdle();
   }
 

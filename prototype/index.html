@@ -10,12 +10,14 @@
 <div class="site-shell prototype-shell">
 <main class="content"><article class="article prototype-article">
 <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><strong>Live prototype</strong></nav>
-<header class="page-hero prototype-hero"><p class="kicker">Interactive reference implementation</p><h1>Run a claim through the operating model</h1><p class="lead">This simulator makes the architecture tangible. The claim does not move through a queue. Evidence, intelligence, decisions and actions assemble around a persistent Claim State, and each outcome is released when its own prerequisites are satisfied.</p>
+<header class="page-hero prototype-hero"><p class="kicker">Guided claims simulation</p><h1>See the next safe action</h1><p class="lead">Choose a scenario, advance the evidence and watch the recommended action change. Open the supporting detail only when you need it.</p>
 <div class="prototype-disclaimer"><strong>Prototype boundary.</strong> All customers, claims, values, timings, scores and decisions are synthetic and illustrative. This is not a production claims system, policy interpretation engine, compliance determination or automated decisioning service.</div></header>
+
+<div class="demo-steps" aria-label="How to use the prototype"><span><b>1</b> Choose a scenario</span><span><b>2</b> Advance the evidence</span><span><b>3</b> Review the next action</span></div>
 
 <section class="prototype-launchbar" aria-label="Simulation controls">
   <div class="scenario-picker"><label for="scenario-select">Scenario</label><select id="scenario-select"></select><div id="scenario-summary" class="scenario-summary"></div></div>
-  <div class="sim-actions"><button class="sim-btn primary" id="start-sim">Start claim</button><button class="sim-btn" id="next-event" disabled>Next event</button><button class="sim-btn" id="auto-run" disabled>Auto run</button><button class="sim-btn ghost" id="reset-sim" disabled>Reset</button></div>
+  <div class="sim-actions"><button class="sim-btn primary" id="start-sim">Start scenario</button><button class="sim-btn" id="next-event" disabled>Advance</button><button class="sim-btn" id="auto-run" disabled>Play</button><button class="sim-btn ghost" id="reset-sim" disabled>Reset</button></div>
 </section>
 
 <section class="prototype-statusbar" aria-live="polite">
@@ -26,33 +28,27 @@
   <div class="status-progress"><span class="status-label">Progress</span><div class="progress-track"><i id="progress-bar"></i></div></div>
 </section>
 
-<section class="prototype-grid">
-  <div class="prototype-main">
-    <section class="sim-panel claim-state-panel">
-      <div class="panel-heading"><div><p class="panel-kicker">Persistent state</p><h2>Claim State</h2></div><span class="state-badge" id="state-badge">WAITING</span></div>
-      <div class="claim-state-summary" id="claim-state-summary"><p>Choose a scenario and start the claim.</p></div>
-      <div class="state-domains" id="state-domains"></div>
-    </section>
-
-    <section class="sim-panel">
-      <div class="panel-heading"><div><p class="panel-kicker">Parallel intelligence</p><h2>What is known right now?</h2></div><span class="tiny-note">No global join</span></div>
-      <div class="intel-grid" id="intel-grid"></div>
-    </section>
-
+<section class="prototype-grid prototype-workspace">
+  <div class="prototype-main prototype-primary">
     <section class="sim-panel action-panel">
-      <div class="panel-heading"><div><p class="panel-kicker">Outcome readiness</p><h2>What can safely happen now?</h2></div><span class="tiny-note">Action-specific readiness</span></div>
+      <div class="panel-heading"><div><p class="panel-kicker">Recommendation</p><h2>Next best action</h2></div><span class="state-badge" id="state-badge">WAITING</span></div>
       <div class="action-board" id="action-board"></div>
     </section>
 
-    <section class="sim-panel comparison-panel">
-      <div class="panel-heading"><div><p class="panel-kicker">Operating-model contrast</p><h2>Traditional queue vs orchestrated claim</h2></div><button class="sim-btn small" id="toggle-compare">Show comparison</button></div>
-      <div id="comparison-content" hidden></div>
+    <section class="sim-panel claim-state-panel">
+      <div class="panel-heading"><div><p class="panel-kicker">Claim context</p><h2>What has happened?</h2></div><span class="tiny-note">Persistent Claim State</span></div>
+      <div class="claim-state-summary" id="claim-state-summary"><p>Choose a scenario and start the claim.</p></div>
     </section>
+
+    <details class="prototype-disclosure"><summary><span><b>Evidence analysis</b><small>Confidence, findings and material unknowns</small></span><i>Open</i></summary><div class="intel-grid" id="intel-grid"></div></details>
+    <details class="prototype-disclosure"><summary><span><b>Full Claim State</b><small>All seven intelligence domains</small></span><i>Open</i></summary><div class="state-domains" id="state-domains"></div></details>
+    <details class="prototype-disclosure"><summary><span><b>All candidate actions</b><small>Readiness and rationale for every available action</small></span><i>Open</i></summary><div class="action-board all-actions-board" id="all-actions-board"></div></details>
+    <details class="prototype-disclosure comparison-panel" id="comparison-disclosure"><summary><span><b>Compare operating models</b><small>Traditional queue versus orchestrated claim</small></span><i>Open</i></summary><div id="comparison-content" hidden></div></details>
   </div>
 
   <aside class="prototype-rail">
     <section class="sim-panel compact">
-      <div class="panel-heading"><div><p class="panel-kicker">Event stream</p><h2>What changed</h2></div></div>
+      <div class="panel-heading"><div><p class="panel-kicker">Live activity</p><h2>What changed</h2></div></div>
       <ol class="event-stream" id="event-stream"><li class="empty">No events yet.</li></ol>
     </section>
 
@@ -61,10 +57,7 @@
       <ol class="customer-stream" id="customer-stream"><li class="empty">No customer communications yet.</li></ol>
     </section>
 
-    <section class="sim-panel compact control-console">
-      <div class="panel-heading"><div><p class="panel-kicker">Control plane</p><h2>Controls in force</h2></div></div>
-      <div id="control-console"></div>
-    </section>
+    <details class="prototype-disclosure rail-disclosure"><summary><span><b>Controls in force</b><small>Governance and authority checks</small></span><i>Open</i></summary><div id="control-console"></div></details>
   </aside>
 </section>
 
