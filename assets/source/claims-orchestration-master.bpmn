@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_AdaptiveClaims" targetNamespace="https://openai.example/adaptive-claims">
+  <bpmn:collaboration id="Collaboration_AdaptiveClaims">
+    <bpmn:participant id="Participant_Customer" name="Customer / Representative"/>
+    <bpmn:participant id="Participant_Insurer" name="Insurer - Adaptive Claims" processRef="Process_AdaptiveClaims"/>
+    <bpmn:participant id="Participant_External" name="External Experts / Suppliers / Third Parties"/>
+    <bpmn:messageFlow id="MessageFlow_Claim" name="Claim notification" sourceRef="Participant_Customer" targetRef="Start_Claim"/>
+    <bpmn:messageFlow id="MessageFlow_Comms" name="Updates / evidence requests / decisions" sourceRef="Sub_Comms" targetRef="Participant_Customer"/>
+    <bpmn:messageFlow id="MessageFlow_Evidence" name="Evidence / enquiry" sourceRef="Participant_Customer" targetRef="Sub_Decision"/>
+    <bpmn:messageFlow id="MessageFlow_External" name="Appointments / instructions / results" sourceRef="Sub_Fulfil" targetRef="Participant_External"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_AdaptiveClaims" name="Adaptive Claims Future-State Master" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_1" name="Claims Orchestration &amp; Claim State">
+        <bpmn:flowNodeRef>Start_Claim</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Register</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Orient</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Immediate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ClaimState</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Activate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Sub_Decision</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_Material</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Reevaluate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Closure</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Close</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Claim</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_2" name="AI &amp; Automated Intelligence">
+        <bpmn:flowNodeRef>Sub_Intelligence</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_3" name="Claims Decisioning / Human Expertise">
+        <bpmn:flowNodeRef>Sub_Human</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_4" name="Fulfilment &amp; External Ecosystem">
+        <bpmn:flowNodeRef>Sub_Fulfil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Urgent</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_5" name="Customer Communication &amp; Support">
+        <bpmn:flowNodeRef>Sub_Comms</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_6" name="Regulatory / Risk / Control Services">
+        <bpmn:flowNodeRef>Sub_Control</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Claim" name="Claim notification received">
+      <bpmn:messageEventDefinition id="MsgDef_Start"/>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_Register" name="Register claim and establish identity"/>
+    <bpmn:serviceTask id="Task_Orient" name="Orient claim, customer and immediate needs"/>
+    <bpmn:exclusiveGateway id="Gateway_Immediate" name="Immediate assistance required?"/>
+    <bpmn:serviceTask id="Task_ClaimState" name="Create and initialise persistent Claim State"/>
+    <bpmn:parallelGateway id="Gateway_Activate" name="Activate lifecycle capabilities"/>
+    <bpmn:subProcess id="Sub_Decision" name="Run decision-readiness and action-release loop"/>
+    <bpmn:intermediateCatchEvent id="Event_Material" name="Material state change">
+      <bpmn:signalEventDefinition id="SignalDef_Material"/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Task_Reevaluate" name="Re-evaluate Claim State and candidate actions"/>
+    <bpmn:exclusiveGateway id="Gateway_Closure" name="Customer outcome and mandatory obligations complete?"/>
+    <bpmn:serviceTask id="Task_Close" name="Transition residual work and close customer claim"/>
+    <bpmn:endEvent id="End_Claim" name="Claim closed"/>
+    <bpmn:subProcess id="Sub_Intelligence" name="Maintain parallel claim intelligence"/>
+    <bpmn:subProcess id="Sub_Human" name="Human judgement and approvals"/>
+    <bpmn:subProcess id="Sub_Fulfil" name="Execute eligible claim actions"/>
+    <bpmn:subProcess id="Sub_Comms" name="Manage customer communication and support lifecycle"/>
+    <bpmn:subProcess id="Sub_Control" name="Monitor regulatory, risk and control obligations"/>
+    <bpmn:serviceTask id="Task_Urgent" name="Provide urgent or emergency assistance"/>
+    <bpmn:dataStoreReference id="DataStoreRef_ClaimState" name="Persistent Claim State" dataStoreRef="DataStore_ClaimState"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Claim" targetRef="Task_Register"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Register" targetRef="Task_Orient"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_Orient" targetRef="Gateway_Immediate"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Gateway_Immediate" targetRef="Task_ClaimState" name="No / continue"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Gateway_Immediate" targetRef="Task_Urgent" name="Yes"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Urgent" targetRef="Task_ClaimState"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_ClaimState" targetRef="Gateway_Activate"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Gateway_Activate" targetRef="Sub_Decision"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Gateway_Activate" targetRef="Sub_Intelligence"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Gateway_Activate" targetRef="Sub_Comms"/>
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Gateway_Activate" targetRef="Sub_Control"/>
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Sub_Decision" targetRef="Event_Material"/>
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Event_Material" targetRef="Task_Reevaluate"/>
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_Reevaluate" targetRef="Gateway_Closure"/>
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="Gateway_Closure" targetRef="Task_Close" name="Yes"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="Gateway_Closure" targetRef="Event_Material" name="No - continue"/>
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_Close" targetRef="End_Claim"/>
+  </bpmn:process>
+  <bpmn:dataStore id="DataStore_ClaimState" name="Persistent Claim State"/>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Master">
+    <bpmndi:BPMNPlane id="BPMNPlane_Master" bpmnElement="Collaboration_AdaptiveClaims">
+      <bpmndi:BPMNShape id="Participant_Customer_di" bpmnElement="Participant_Customer" isHorizontal="true">
+        <dc:Bounds x="80" y="120" width="3140" height="110"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Insurer_di" bpmnElement="Participant_Insurer" isHorizontal="true">
+        <dc:Bounds x="80" y="270" width="3140" height="1500"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_External_di" bpmnElement="Participant_External" isHorizontal="true">
+        <dc:Bounds x="80" y="1790" width="3140" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true">
+        <dc:Bounds x="80" y="270" width="3140" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true">
+        <dc:Bounds x="80" y="520" width="3140" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_3_di" bpmnElement="Lane_3" isHorizontal="true">
+        <dc:Bounds x="80" y="770" width="3140" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_4_di" bpmnElement="Lane_4" isHorizontal="true">
+        <dc:Bounds x="80" y="1020" width="3140" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_5_di" bpmnElement="Lane_5" isHorizontal="true">
+        <dc:Bounds x="80" y="1270" width="3140" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_6_di" bpmnElement="Lane_6" isHorizontal="true">
+        <dc:Bounds x="80" y="1520" width="3140" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Claim_di" bpmnElement="Start_Claim">
+        <dc:Bounds x="288" y="343" width="44" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Register_di" bpmnElement="Task_Register">
+        <dc:Bounds x="370" y="315" width="200" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Orient_di" bpmnElement="Task_Orient">
+        <dc:Bounds x="610" y="315" width="210" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Immediate_di" bpmnElement="Gateway_Immediate">
+        <dc:Bounds x="849" y="339" width="52" height="52"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ClaimState_di" bpmnElement="Task_ClaimState">
+        <dc:Bounds x="935" y="315" width="220" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Activate_di" bpmnElement="Gateway_Activate">
+        <dc:Bounds x="1184" y="339" width="52" height="52"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Decision_di" bpmnElement="Sub_Decision">
+        <dc:Bounds x="1280" y="305" width="245" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_Material_di" bpmnElement="Event_Material">
+        <dc:Bounds x="1553" y="343" width="44" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Reevaluate_di" bpmnElement="Task_Reevaluate">
+        <dc:Bounds x="1630" y="305" width="245" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Closure_di" bpmnElement="Gateway_Closure">
+        <dc:Bounds x="1904" y="339" width="52" height="52"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Close_di" bpmnElement="Task_Close">
+        <dc:Bounds x="2010" y="305" width="245" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Claim_di" bpmnElement="End_Claim">
+        <dc:Bounds x="2293" y="343" width="44" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Intelligence_di" bpmnElement="Sub_Intelligence">
+        <dc:Bounds x="1270" y="565" width="330" height="125"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Human_di" bpmnElement="Sub_Human">
+        <dc:Bounds x="1675" y="815" width="330" height="125"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Fulfil_di" bpmnElement="Sub_Fulfil">
+        <dc:Bounds x="1675" y="1065" width="330" height="125"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Comms_di" bpmnElement="Sub_Comms">
+        <dc:Bounds x="1270" y="1315" width="330" height="125"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Control_di" bpmnElement="Sub_Control">
+        <dc:Bounds x="1270" y="1565" width="330" height="125"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Urgent_di" bpmnElement="Task_Urgent">
+        <dc:Bounds x="830" y="1060" width="240" height="105"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreRef_ClaimState_di" bpmnElement="DataStoreRef_ClaimState">
+        <dc:Bounds x="2450" y="305" width="450" height="125"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="310.0" y="365.0"/>
+        <di:waypoint x="470.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="470.0" y="365.0"/>
+        <di:waypoint x="715.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="715.0" y="365.0"/>
+        <di:waypoint x="875.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="875.0" y="365.0"/>
+        <di:waypoint x="1045.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="875.0" y="365.0"/>
+        <di:waypoint x="950.0" y="1112.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="950.0" y="1112.5"/>
+        <di:waypoint x="1045.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="1045.0" y="365.0"/>
+        <di:waypoint x="1210.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="1210.0" y="365.0"/>
+        <di:waypoint x="1402.5" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="1210.0" y="365.0"/>
+        <di:waypoint x="1435.0" y="627.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1210.0" y="365.0"/>
+        <di:waypoint x="1435.0" y="1377.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="1210.0" y="365.0"/>
+        <di:waypoint x="1435.0" y="1627.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="1402.5" y="365.0"/>
+        <di:waypoint x="1575.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13">
+        <di:waypoint x="1575.0" y="365.0"/>
+        <di:waypoint x="1752.5" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14">
+        <di:waypoint x="1752.5" y="365.0"/>
+        <di:waypoint x="1930.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15_di" bpmnElement="Flow_15">
+        <di:waypoint x="1930.0" y="365.0"/>
+        <di:waypoint x="2132.5" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16_di" bpmnElement="Flow_16">
+        <di:waypoint x="1930.0" y="365.0"/>
+        <di:waypoint x="1575.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17_di" bpmnElement="Flow_17">
+        <di:waypoint x="2132.5" y="365.0"/>
+        <di:waypoint x="2315.0" y="365.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

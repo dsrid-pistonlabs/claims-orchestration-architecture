@@ -1,0 +1,155 @@
+[
+ {
+ "id": "SRC-01",
+ "type": "CODE",
+ "title": "General Insurance Code of Practice - current Code",
+ "publisher": "Insurance Council of Australia",
+ "date": "Current page, accessed 14 Sep 2026",
+ "url": "https://insurancecouncil.com.au/cop/",
+ "use": "Current Code status and paragraphs governing retail general insurance claims, service suppliers, vulnerability, communications and complaints."
+ },
+ {
+ "id": "SRC-02",
+ "type": "CODE-STATUS",
+ "title": "Insurance Council publishes Code review submissions",
+ "publisher": "Insurance Council of Australia",
+ "date": "28 Aug 2026",
+ "url": "https://insurancecouncil.com.au/resource/insurance-council-publishes-code-review-submissions/",
+ "use": "Confirms the current Code remains in place while the 2026 redraft is considered and a revised Code is expected to be submitted to ASIC later in 2026."
+ },
+ {
+ "id": "SRC-03",
+ "type": "LAW",
+ "title": "Corporations Act 2001 - current compilation",
+ "publisher": "Federal Register of Legislation",
+ "date": "Compilation effective 27 Aug 2026",
+ "url": "https://www.legislation.gov.au/C2004A00818/latest/downloads",
+ "use": "Primary legislative basis for AFS licensee obligations, including section 912A."
+ },
+ {
+ "id": "SRC-04",
+ "type": "ASIC",
+ "title": "Claims handling and settling: How to comply with your AFS licence obligations (INFO 253)",
+ "publisher": "ASIC",
+ "date": "Updated Jun 2025",
+ "url": "https://asic.gov.au/for-finance-professionals/afs-licensees/applying-for-and-managing-an-afs-licence/licensing-certain-service-providers/claims-handling-and-settling-how-to-comply-with-your-afs-licence-obligations/",
+ "use": "Claims handling and settling as a regulated financial service; licensing, supervision, disclosure and cash settlement obligations."
+ },
+ {
+ "id": "SRC-05",
+ "type": "ASIC",
+ "title": "Regulatory Guide 271 - Internal dispute resolution",
+ "publisher": "ASIC",
+ "date": "Issued 2 Sep 2021",
+ "url": "https://asic.gov.au/regulatory-resources/find-a-document/regulatory-guides/rg-271-internal-dispute-resolution/",
+ "use": "Enforceable IDR requirements, complaint identification, response content, response timeframes and delay notifications."
+ },
+ {
+ "id": "SRC-06",
+ "type": "ASIC",
+ "title": "REP 802 Cause for complaint: Complaints handling in general insurance",
+ "publisher": "ASIC",
+ "date": "5 Dec 2024",
+ "url": "https://asic.gov.au/regulatory-resources/find-a-document/reports/rep-802-cause-for-complaint-complaints-handling-in-general-insurance/",
+ "use": "General insurance complaint handling findings, complaint recognition and delay-notification failure modes."
+ },
+ {
+ "id": "SRC-07",
+ "type": "LAW",
+ "title": "Privacy Act 1988 - current compilation",
+ "publisher": "Federal Register of Legislation",
+ "date": "Compilation effective 4 Jun 2026",
+ "url": "https://www.legislation.gov.au/C2004A03712/latest/details",
+ "use": "Primary privacy law and Australian Privacy Principles."
+ },
+ {
+ "id": "SRC-08",
+ "type": "OAIC",
+ "title": "Australian Privacy Principles guidelines",
+ "publisher": "OAIC",
+ "date": "Updated May 2026",
+ "url": "https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines",
+ "use": "Current privacy guidance, including collection minimisation, use/disclosure, data quality and security."
+ },
+ {
+ "id": "SRC-09",
+ "type": "OAIC",
+ "title": "Guidance on privacy and the use of commercially available AI products",
+ "publisher": "OAIC",
+ "date": "Current guidance, accessed 14 Sep 2026",
+ "url": "https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/guidance-on-privacy-and-the-use-of-commercially-available-ai-products",
+ "use": "High privacy risk of AI-supported decisions affecting rights or interests; accuracy, appropriateness and explainability considerations."
+ },
+ {
+ "id": "SRC-10",
+ "type": "INCOMING",
+ "title": "APP 1 automated decision transparency obligations",
+ "publisher": "OAIC / Privacy Act amendments",
+ "date": "Commence 10 Dec 2026",
+ "url": "https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-1-app-1-open-and-transparent-management-of-personal-information",
+ "use": "Incoming privacy-policy transparency obligations for certain automated decisions using personal information. Not yet commenced as at 14 Sep 2026."
+ },
+ {
+ "id": "SRC-11",
+ "type": "ASIC",
+ "title": "Beyond the payout: ASIC warns home insurers to reduce cash settlement risks",
+ "publisher": "ASIC",
+ "date": "31 Aug 2026",
+ "url": "https://www.asic.gov.au/about-asic/news-centre/articles/beyond-the-payout-asic-warns-home-insurers-to-reduce-cash-settlement-risks",
+ "use": "Current ASIC findings on cash settlement fairness, customer information, vulnerability and monitoring of outcomes."
+ },
+ {
+ "id": "SRC-12",
+ "type": "ASIC",
+ "title": "ASIC tells home insurers: Fix your oversight of independent experts and improve communication on cash settlements",
+ "publisher": "ASIC",
+ "date": "5 Jun 2025",
+ "url": "https://asic.gov.au/about-asic/news-centre/news-items/asic-tells-home-insurers-fix-your-oversight-of-independent-experts-and-improve-communication-on-cash-settlements/",
+ "use": "Expert/supplier oversight and cash settlement communication expectations."
+ },
+ {
+ "id": "SRC-13",
+ "type": "LAW",
+ "title": "Insurance Contracts Act 1984 - current compilation",
+ "publisher": "Federal Register of Legislation",
+ "date": "Current compilation, accessed 14 Sep 2026",
+ "url": "https://www.legislation.gov.au/C2004A02944/latest",
+ "use": "Primary insurance-contract legislation, including the statutory duty of utmost good faith in sections 13-14A."
+ },
+ {
+ "id": "SRC-14",
+ "type": "APRA",
+ "title": "CPS 230 Operational Risk Management",
+ "publisher": "APRA",
+ "date": "Current standard in force 1 Jul 2026",
+ "url": "https://www.apra.gov.au/standards/cps-230",
+ "use": "Operational risk, resilience of critical operations, business continuity and service-provider management for APRA-regulated entities."
+ },
+ {
+ "id": "SRC-15",
+ "type": "APRA",
+ "title": "CPS 234 Information Security",
+ "publisher": "APRA",
+ "date": "Current prudential standard, accessed 14 Sep 2026",
+ "url": "https://www.apra.gov.au/standards/cps-234",
+ "use": "Information-security capability and controls for APRA-regulated entities, including general insurers."
+ },
+ {
+ "id": "SRC-16",
+ "type": "VENDOR",
+ "title": " - Overview",
+ "publisher": " Documentation",
+ "date": "Current documentation, accessed 14 Sep 2026",
+ "url": "https://docs..com//automation-cloud/latest/user-guide/overview",
+ "use": "Current vendor description of as an orchestration platform spanning automation, AI agents and human work, with BPMN, Flow and Case Management."
+ },
+ {
+ "id": "SRC-17",
+ "type": "VENDOR",
+ "title": " - Understanding BPMN modeling and implementation",
+ "publisher": " Documentation",
+ "date": "Current documentation, accessed 14 Sep 2026",
+ "url": "https://docs..com//automation-cloud/latest/user-guide/understanding-process-modeling",
+ "use": "Current vendor documentation for BPMN 2.0 modeling and implementation as executable orchestration."
+ }
+]

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Prototype | Claims Orchestration Reference Architecture</title>
+<meta name="description" content="Interactive synthetic claims orchestration prototype demonstrating persistent Claim State, parallel intelligence, action-specific readiness, human decisioning and controls.">
+<meta name="author" content="Dharshun Sridharan"><meta name="theme-color" content="#102b3b">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head><body data-page="prototype/index.html">
+<header class="topbar"><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">☰</button><a class="top-brand" href="../index.html"><span class="brand-mark">COR<span>A</span></span><span><strong>Claims Orchestration</strong><small>Reference Architecture</small></span></a><div class="top-meta"><span>Interactive Prototype</span><span>Synthetic scenarios</span></div></header>
+<div class="site-shell prototype-shell">
+<main class="content"><article class="article prototype-article">
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><strong>Live prototype</strong></nav>
+<header class="page-hero prototype-hero"><p class="kicker">Interactive reference implementation</p><h1>Run a claim through the operating model</h1><p class="lead">This simulator makes the architecture tangible. The claim does not move through a queue. Evidence, intelligence, decisions and actions assemble around a persistent Claim State, and each outcome is released when its own prerequisites are satisfied.</p>
+<div class="prototype-disclaimer"><strong>Prototype boundary.</strong> All customers, claims, values, timings, scores and decisions are synthetic and illustrative. This is not a production claims system, policy interpretation engine, compliance determination or automated decisioning service.</div></header>
+
+<section class="prototype-launchbar" aria-label="Simulation controls">
+  <div class="scenario-picker"><label for="scenario-select">Scenario</label><select id="scenario-select"></select><div id="scenario-summary" class="scenario-summary"></div></div>
+  <div class="sim-actions"><button class="sim-btn primary" id="start-sim">Start claim</button><button class="sim-btn" id="next-event" disabled>Next event</button><button class="sim-btn" id="auto-run" disabled>Auto run</button><button class="sim-btn ghost" id="reset-sim" disabled>Reset</button></div>
+</section>
+
+<section class="prototype-statusbar" aria-live="polite">
+  <div><span class="status-label">Claim</span><strong id="claim-id">Not started</strong></div>
+  <div><span class="status-label">Simulation time</span><strong id="sim-time">00:00</strong></div>
+  <div><span class="status-label">Claim State</span><strong id="state-version">v0</strong></div>
+  <div><span class="status-label">Next decision</span><strong id="next-decision">Start a scenario</strong></div>
+  <div class="status-progress"><span class="status-label">Progress</span><div class="progress-track"><i id="progress-bar"></i></div></div>
+</section>
+
+<section class="prototype-grid">
+  <div class="prototype-main">
+    <section class="sim-panel claim-state-panel">
+      <div class="panel-heading"><div><p class="panel-kicker">Persistent state</p><h2>Claim State</h2></div><span class="state-badge" id="state-badge">WAITING</span></div>
+      <div class="claim-state-summary" id="claim-state-summary"><p>Choose a scenario and start the claim.</p></div>
+      <div class="state-domains" id="state-domains"></div>
+    </section>
+
+    <section class="sim-panel">
+      <div class="panel-heading"><div><p class="panel-kicker">Parallel intelligence</p><h2>What is known right now?</h2></div><span class="tiny-note">No global join</span></div>
+      <div class="intel-grid" id="intel-grid"></div>
+    </section>
+
+    <section class="sim-panel action-panel">
+      <div class="panel-heading"><div><p class="panel-kicker">Outcome readiness</p><h2>What can safely happen now?</h2></div><span class="tiny-note">Action-specific readiness</span></div>
+      <div class="action-board" id="action-board"></div>
+    </section>
+
+    <section class="sim-panel comparison-panel">
+      <div class="panel-heading"><div><p class="panel-kicker">Operating-model contrast</p><h2>Traditional queue vs orchestrated claim</h2></div><button class="sim-btn small" id="toggle-compare">Show comparison</button></div>
+      <div id="comparison-content" hidden></div>
+    </section>
+  </div>
+
+  <aside class="prototype-rail">
+    <section class="sim-panel compact">
+      <div class="panel-heading"><div><p class="panel-kicker">Event stream</p><h2>What changed</h2></div></div>
+      <ol class="event-stream" id="event-stream"><li class="empty">No events yet.</li></ol>
+    </section>
+
+    <section class="sim-panel compact">
+      <div class="panel-heading"><div><p class="panel-kicker">Customer lifecycle</p><h2>Customer timeline</h2></div></div>
+      <ol class="customer-stream" id="customer-stream"><li class="empty">No customer communications yet.</li></ol>
+    </section>
+
+    <section class="sim-panel compact control-console">
+      <div class="panel-heading"><div><p class="panel-kicker">Control plane</p><h2>Controls in force</h2></div></div>
+      <div id="control-console"></div>
+    </section>
+  </aside>
+</section>
+
+<div class="decision-modal" id="decision-modal" hidden aria-hidden="true">
+  <div class="decision-backdrop"></div>
+  <section class="decision-card" role="dialog" aria-modal="true" aria-labelledby="decision-title">
+    <div class="decision-header"><div><p class="panel-kicker">Human decision required</p><h2 id="decision-title">Decision</h2></div><span class="decision-risk" id="decision-risk">HIGH CONSEQUENCE</span></div>
+    <div id="decision-body"></div>
+    <div class="decision-actions" id="decision-actions"></div>
+  </section>
+</div>
+
+<section class="section prototype-method"><h2>What this prototype proves, and what it does not</h2>
+<div class="table-wrap"><table><thead><tr><th>Demonstrates</th><th>Does not claim</th></tr></thead><tbody>
+<tr><td>A persistent Claim State can coordinate long-running, asynchronous work.</td><td>That these synthetic rules are suitable for a real policy or portfolio.</td></tr>
+<tr><td>Independent intelligence domains can progress without waiting for a global stage gate.</td><td>That confidence scores are legal authority or final decisions.</td></tr>
+<tr><td>Each candidate action can have its own evidence, authority, control and human prerequisites.</td><td>That any displayed control set is exhaustive for an insurer, product or jurisdiction.</td></tr>
+<tr><td>Human review can stop one consequential decision without freezing unrelated customer-beneficial work.</td><td>That human oversight alone makes an implementation compliant or safe.</td></tr>
+<tr><td>Customer communication and control obligations can operate as parallel lifecycles.</td><td>That the illustrative timings or customer messages are production-approved.</td></tr>
+</tbody></table></div>
+</section>
+
+<footer class="page-footer"><div><strong>Dharshun Sridharan</strong><br>Claims transformation, process architecture, AI/automation and risk</div><div>Interactive prototype<br>Synthetic reference implementation</div><div><a href="../governance/methodology.html">Method & scope</a><br><a href="../governance/control-framework.html">Control framework</a></div></footer>
+</article></main>
+<aside class="page-toc"><div class="toc-inner"><div class="toc-title">Prototype</div><nav><a href="#claim-state-summary">Claim State</a><a href="#intel-grid">Parallel intelligence</a><a href="#action-board">Action readiness</a><a href="#control-console">Controls</a></nav></div></aside>
+</div><div class="nav-scrim" aria-hidden="true"></div>
+<script src="../data/functions.js"></script><script src="../assets/js/site.js"></script><script src="../assets/js/prototype.js"></script>
+</body></html>

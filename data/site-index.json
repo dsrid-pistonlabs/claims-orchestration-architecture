@@ -1,0 +1,114 @@
+[
+ {
+ "path": "index.html",
+ "title": "Overview"
+ },
+ {
+ "path": "why-change.html",
+ "title": "Why change the process"
+ },
+ {
+ "path": "operating-model/index.html",
+ "title": "Target operating model"
+ },
+ {
+ "path": "operating-model/principles.html",
+ "title": "Design principles"
+ },
+ {
+ "path": "operating-model/capabilities.html",
+ "title": "Capability model"
+ },
+ {
+ "path": "process/index.html",
+ "title": "Process hierarchy"
+ },
+ {
+ "path": "process/master.html",
+ "title": "L1 master process"
+ },
+ {
+ "path": "process/intake.html",
+ "title": "1. Establishment & intake"
+ },
+ {
+ "path": "process/intelligence.html",
+ "title": "2. Parallel intelligence"
+ },
+ {
+ "path": "process/decision-readiness.html",
+ "title": "3. Decision readiness"
+ },
+ {
+ "path": "process/communications-controls.html",
+ "title": "5/6. Communications & controls"
+ },
+ {
+ "path": "process/fulfilment-closure.html",
+ "title": "4/7. Fulfilment & closure"
+ },
+ {
+ "path": "process/function-catalogue.html",
+ "title": "Function catalogue"
+ },
+ {
+ "path": "reference/index.html",
+ "title": "Component architecture"
+ },
+ {
+ "path": "reference/claim-state.html",
+ "title": "Claim State"
+ },
+ {
+ "path": "reference/decision-architecture.html",
+ "title": "Decision architecture"
+ },
+ {
+ "path": "reference/human-decisioning.html",
+ "title": "Human decisioning"
+ },
+ {
+ "path": "reference/agents-services.html",
+ "title": "Agents & services"
+ },
+ {
+ "path": "reference/non-functional.html",
+ "title": "Non-functional requirements"
+ },
+ {
+ "path": "governance/control-framework.html",
+ "title": "Control model"
+ },
+ {
+ "path": "governance/compliance-map.html",
+ "title": "Obligation map"
+ },
+ {
+ "path": "governance/traceability.html",
+ "title": "Traceability"
+ },
+ {
+ "path": "implementation/index.html",
+ "title": "Delivery approach"
+ },
+ {
+ "path": "implementation/feasibility.html",
+ "title": "Practical feasibility"
+ },
+ {
+ "path": "implementation/assurance.html",
+ "title": "Assurance & testing"
+ },
+ {
+ "path": "implementation/-.html",
+ "title": ""
+ },
+ {
+ "path": "governance/methodology.html",
+ "title": "Methodology & scope"
+ },
+ {
+ "path": "governance/sources.html",
+ "title": "Authoritative sources"
+ }
+]
